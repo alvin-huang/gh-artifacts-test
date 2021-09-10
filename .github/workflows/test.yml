@@ -1,0 +1,19 @@
+name: test
+
+on: push
+
+jobs:
+  foo:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        letter: ["a", "b", "c", "d", "e"]
+        number: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
+    steps:
+      - uses: actions/checkout@v2
+      - run: |
+          dd if=/dev/urandom of=${{ matrix.letter }}_${{ matrix.number }}.zip bs=1M count=50
+      - uses: actions/upload-artifact@v2
+        with:
+          name: ${{ matrix.letter }}_${{ matrix.number }}.zip
+          path: ${{ matrix.letter }}_${{ matrix.number }}.zip
